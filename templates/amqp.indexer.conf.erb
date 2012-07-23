@@ -5,7 +5,7 @@ input {
 	port => <%= @port || 5672 %>
 	ssl => false
     exchange => "<%= @exchange || 'app-logging' %>"
-    key => "<%= key || '#' %>"
+    key => "<%= @key || '#' %>"
     prefetch_count => 10
     
 	user => "guest"
