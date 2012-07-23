@@ -1,0 +1,32 @@
+input {
+  # http://logstash.net/docs/1.1.1/inputs/amqp
+  amqp {
+    host => "127.0.0.1"
+	port => <%= @port || 5672 %>
+	ssl => false
+    exchange => "<%= @exchange || 'app-logging' =%>"
+    key => "<%= key || '#' %>"
+    prefetch_count => 10
+    
+	user => "guest"
+	password => "<%= @password || 'guest' %>"
+	
+    exclusive => true
+    format => "json_event"
+    passive => false
+	
+	# tags => ... # array (optional)
+    type => "rabbitmq"
+  }
+}
+
+output {
+  stdout { 
+    debug => true 
+    debug_format => "json"
+  }
+
+  elasticsearch {
+    host => "127.0.0.1"
+  }
+}
