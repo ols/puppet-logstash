@@ -14,7 +14,7 @@
 class logstash($version = '1.1.1') {
 
   file { "/opt/logstash-${version}-monolithic.jar":
-    source => "puppet:///modules/logstash/files/logstash-${version}-monolithic.jar",
+    source => "puppet:///modules/logstash/logstash-${version}-monolithic.jar",
     ensure => present
   }
   
