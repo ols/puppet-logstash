@@ -39,6 +39,7 @@ class logstash($version = '1.1.1') {
       File["/etc/init.d/logstash"],
       File["/etc/logstash.conf"],
       File["/opt/logstash-${version}-monolithic.jar"]
-    ]
+    ],
+    provider => "init"
   }
 }
