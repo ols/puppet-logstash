@@ -24,22 +24,32 @@ class logstash($version = '1.1.1') {
     replace => false
   }
   
-  file {"/etc/init.d/logstash":
-    content => template("logstash/init-logstash.erb"),
+  file {"/etc/init/logstash.conf":
+    source => "puppet:///logstash/files/logstash.conf",
     ensure => present,
-    mode => 0755,
+    mode => 0644,
     owner => root,
     group => root
   }
   
+  file { '/etc/init.d/logstash':
+    ensure => 'link',
+    target => '/lib/init/upstart-job',
+    owner => 'root',
+    group => 'root'
+  }
+  
   service {"logstash":
     ensure => running,
-    subscribe => File["/etc/logstash.conf"],
+    subscribe => [
+      File['/etc/logstash.conf'],
+      File['/etc/init.d/logstash']
+    ],
     require => [
-      File["/etc/init.d/logstash"],
+      File["/etc/init/logstash.conf"],
       File["/etc/logstash.conf"],
       File["/opt/logstash-${version}-monolithic.jar"]
     ],
-    provider => "init"
+    provider => "upstart"
   }
 }

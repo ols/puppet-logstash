@@ -25,7 +25,7 @@ start () {
         command="${logstash_bin} agent -f $logstash_conf --log $logstash_log -- web"
 
         log_daemon_msg "Starting $name"
-        if start-stop-daemon --start --quiet --oknodo -d /opt/ --pidfile "$pid_file" -b -m -N 19 --exec $command; then
+        if start-stop-daemon --start --quiet --oknodo -d /opt/ --pidfile "$pid_file" -b -m -N 19 --exec "$command"; then
                 log_end_msg 0
         else
                 log_end_msg 1
