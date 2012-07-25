@@ -25,7 +25,7 @@ class logstash($version = '1.1.1') {
   }
   
   file {"/etc/init/logstash.conf":
-    source => "puppet:///logstash/files/logstash.conf",
+    source => "puppet:///modules/logstash/logstash.conf",
     ensure => present,
     mode => 0644,
     owner => root,
