@@ -18,12 +18,14 @@ class logstash($version = '1.1.1') {
     ensure => present
   }
   
+  # config file
   file { '/etc/logstash.conf':
     content => template('logstash/amqp.indexer.conf.erb'),
     ensure => present,
     replace => false
   }
   
+  # upstart file
   file {"/etc/init/logstash.conf":
     source => "puppet:///modules/logstash/logstash.conf",
     ensure => present,
